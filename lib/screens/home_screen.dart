@@ -1,39 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/app_provider.dart';
 import '../theme.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   static const String route = '/home';
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  static const LatLng _kirkukCenter = LatLng(35.4681, 44.3922);
-
-  GoogleMapController? _mapController;
-  final Set<Marker> _markers = {};
-
-  @override
-  void initState() {
-    super.initState();
-    _markers.add(
-      const Marker(
-        markerId: MarkerId('current_location'),
-        position: _kirkukCenter,
-        infoWindow: InfoWindow(
-          title: 'موقعك الحالي',
-          snippet: 'كركوك، العراق',
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +17,17 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          GoogleMap(
-            initialCameraPosition: const CameraPosition(
-              target: _kirkukCenter,
-              zoom: 14,
+          Container(
+            color: const Color(0xFF1A1A2E),
+            alignment: Alignment.center,
+            child: const Text(
+              'الخريطة قريباً',
+              style: TextStyle(
+                color: Color(0xFFF6C90E),
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            markers: _markers,
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            zoomControlsEnabled: false,
-            mapToolbarEnabled: false,
-            onMapCreated: (controller) => _mapController = controller,
           ),
           SafeArea(
             child: Padding(
@@ -102,11 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
             bottom: 220,
             child: _buildTopButton(
               icon: Icons.my_location_rounded,
-              onTap: () {
-                _mapController?.animateCamera(
-                  CameraUpdate.newLatLngZoom(_kirkukCenter, 15),
-                );
-              },
+              onTap: () {},
             ),
           ),
           DraggableScrollableSheet(
